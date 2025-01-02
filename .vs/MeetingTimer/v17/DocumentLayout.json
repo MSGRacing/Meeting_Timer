@@ -1,0 +1,71 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\lelghrandi\\Documents\\GitHub\\Meeting_Timer\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{A77526BC-5CA1-4BDF-8D8D-3BDE3BAD8348}|MeetingTimer.pyproj|C:\\Users\\lelghrandi\\Documents\\GitHub\\Meeting_Timer\\auth.py||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{A77526BC-5CA1-4BDF-8D8D-3BDE3BAD8348}|MeetingTimer.pyproj|solutionrelative:auth.py||{8B382828-6202-11D1-8870-0000F87579D2}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A77526BC-5CA1-4BDF-8D8D-3BDE3BAD8348}|MeetingTimer.pyproj|C:\\Users\\lelghrandi\\Documents\\GitHub\\Meeting_Timer\\gui.py||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{A77526BC-5CA1-4BDF-8D8D-3BDE3BAD8348}|MeetingTimer.pyproj|solutionrelative:gui.py||{8B382828-6202-11D1-8870-0000F87579D2}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A77526BC-5CA1-4BDF-8D8D-3BDE3BAD8348}|MeetingTimer.pyproj|C:\\Users\\lelghrandi\\Documents\\GitHub\\Meeting_Timer\\Meeting_Tool.py||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{A77526BC-5CA1-4BDF-8D8D-3BDE3BAD8348}|MeetingTimer.pyproj|solutionrelative:Meeting_Tool.py||{8B382828-6202-11D1-8870-0000F87579D2}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "auth.py",
+              "DocumentMoniker": "C:\\Users\\lelghrandi\\Documents\\GitHub\\Meeting_Timer\\auth.py",
+              "RelativeDocumentMoniker": "auth.py",
+              "ToolTip": "C:\\Users\\lelghrandi\\Documents\\GitHub\\Meeting_Timer\\auth.py",
+              "RelativeToolTip": "auth.py",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.002457|",
+              "WhenOpened": "2025-01-02T16:22:33.025Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "gui.py",
+              "DocumentMoniker": "C:\\Users\\lelghrandi\\Documents\\GitHub\\Meeting_Timer\\gui.py",
+              "RelativeDocumentMoniker": "gui.py",
+              "ToolTip": "C:\\Users\\lelghrandi\\Documents\\GitHub\\Meeting_Timer\\gui.py",
+              "RelativeToolTip": "gui.py",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.002457|",
+              "WhenOpened": "2025-01-02T16:22:30.389Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Meeting_Tool.py",
+              "DocumentMoniker": "C:\\Users\\lelghrandi\\Documents\\GitHub\\Meeting_Timer\\Meeting_Tool.py",
+              "RelativeDocumentMoniker": "Meeting_Tool.py",
+              "ToolTip": "C:\\Users\\lelghrandi\\Documents\\GitHub\\Meeting_Timer\\Meeting_Tool.py",
+              "RelativeToolTip": "Meeting_Tool.py",
+              "ViewState": "AgIAADkAAAAAAAAAAAAAAA4AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.002457|",
+              "WhenOpened": "2025-01-02T16:22:22.517Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
