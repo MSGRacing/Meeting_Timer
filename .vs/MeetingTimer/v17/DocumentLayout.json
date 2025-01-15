@@ -3,16 +3,16 @@
   "WorkspaceRootPath": "C:\\Users\\lelghrandi\\Documents\\GitHub\\Meeting_Timer\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{A77526BC-5CA1-4BDF-8D8D-3BDE3BAD8348}|MeetingTimer.pyproj|C:\\Users\\lelghrandi\\Documents\\GitHub\\Meeting_Timer\\auth.py||{8B382828-6202-11D1-8870-0000F87579D2}",
-      "RelativeMoniker": "D:0:0:{A77526BC-5CA1-4BDF-8D8D-3BDE3BAD8348}|MeetingTimer.pyproj|solutionrelative:auth.py||{8B382828-6202-11D1-8870-0000F87579D2}"
+      "AbsoluteMoniker": "D:0:0:{A77526BC-5CA1-4BDF-8D8D-3BDE3BAD8348}|MeetingTimer.pyproj|C:\\Users\\lelghrandi\\Documents\\GitHub\\Meeting_Timer\\Meeting_Tool.py||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{A77526BC-5CA1-4BDF-8D8D-3BDE3BAD8348}|MeetingTimer.pyproj|solutionrelative:Meeting_Tool.py||{8B382828-6202-11D1-8870-0000F87579D2}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A77526BC-5CA1-4BDF-8D8D-3BDE3BAD8348}|MeetingTimer.pyproj|C:\\Users\\lelghrandi\\Documents\\GitHub\\Meeting_Timer\\gui.py||{8B382828-6202-11D1-8870-0000F87579D2}",
       "RelativeMoniker": "D:0:0:{A77526BC-5CA1-4BDF-8D8D-3BDE3BAD8348}|MeetingTimer.pyproj|solutionrelative:gui.py||{8B382828-6202-11D1-8870-0000F87579D2}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A77526BC-5CA1-4BDF-8D8D-3BDE3BAD8348}|MeetingTimer.pyproj|C:\\Users\\lelghrandi\\Documents\\GitHub\\Meeting_Timer\\Meeting_Tool.py||{8B382828-6202-11D1-8870-0000F87579D2}",
-      "RelativeMoniker": "D:0:0:{A77526BC-5CA1-4BDF-8D8D-3BDE3BAD8348}|MeetingTimer.pyproj|solutionrelative:Meeting_Tool.py||{8B382828-6202-11D1-8870-0000F87579D2}"
+      "AbsoluteMoniker": "D:0:0:{A77526BC-5CA1-4BDF-8D8D-3BDE3BAD8348}|MeetingTimer.pyproj|C:\\Users\\lelghrandi\\Documents\\GitHub\\Meeting_Timer\\auth.py||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{A77526BC-5CA1-4BDF-8D8D-3BDE3BAD8348}|MeetingTimer.pyproj|solutionrelative:auth.py||{8B382828-6202-11D1-8870-0000F87579D2}"
     }
   ],
   "DocumentGroupContainers": [
@@ -22,20 +22,19 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 2,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 2,
               "Title": "auth.py",
               "DocumentMoniker": "C:\\Users\\lelghrandi\\Documents\\GitHub\\Meeting_Timer\\auth.py",
               "RelativeDocumentMoniker": "auth.py",
               "ToolTip": "C:\\Users\\lelghrandi\\Documents\\GitHub\\Meeting_Timer\\auth.py",
               "RelativeToolTip": "auth.py",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAABAAAABDAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.002457|",
-              "WhenOpened": "2025-01-02T16:22:33.025Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-01-02T16:22:33.025Z"
             },
             {
               "$type": "Document",
@@ -45,20 +44,19 @@
               "RelativeDocumentMoniker": "gui.py",
               "ToolTip": "C:\\Users\\lelghrandi\\Documents\\GitHub\\Meeting_Timer\\gui.py",
               "RelativeToolTip": "gui.py",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAACQAAAAAAAAAAAAAABAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.002457|",
-              "WhenOpened": "2025-01-02T16:22:30.389Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-01-02T16:22:30.389Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 0,
               "Title": "Meeting_Tool.py",
               "DocumentMoniker": "C:\\Users\\lelghrandi\\Documents\\GitHub\\Meeting_Timer\\Meeting_Tool.py",
               "RelativeDocumentMoniker": "Meeting_Tool.py",
               "ToolTip": "C:\\Users\\lelghrandi\\Documents\\GitHub\\Meeting_Timer\\Meeting_Tool.py",
               "RelativeToolTip": "Meeting_Tool.py",
-              "ViewState": "AgIAADkAAAAAAAAAAAAAAA4AAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAADQBAAAAAAAAAAAQwEsBAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.002457|",
               "WhenOpened": "2025-01-02T16:22:22.517Z",
               "EditorCaption": ""
