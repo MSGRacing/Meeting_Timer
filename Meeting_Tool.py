@@ -144,7 +144,7 @@ def show_meetings_widget():
         # Créer une nouvelle fenêtre
         widget_window = Toplevel(root)
         widget_window.title("Tableau des Meetings")
-        widget_window.geometry("600x230")
+        widget_window.geometry("600x250")
         widget_window.configure(bg="#34495e")
 
         # Rendre la fenêtre toujours au-dessus
@@ -153,6 +153,14 @@ def show_meetings_widget():
         # Ajouter un titre
         title_label = ttk.Label(widget_window, text="Prochains Meetings", font=("Helvetica", 16, "bold"), background="#34495e", foreground="white")
         title_label.pack(pady=10)
+
+        # Ajouter un label pour le nom du prochain meeting
+        meeting_widget_label = ttk.Label(widget_window, text="Chargement...", font=("Helvetica", 14), background="#34495e", foreground="white")
+        meeting_widget_label.pack()
+
+        # Ajouter un label pour le timer
+        countdown_widget_label = ttk.Label(widget_window, text="Chargement...", font=("Helvetica", 30, "bold"), background="#34495e", foreground="white")
+        countdown_widget_label.pack()
         
         # Créer un Treeview pour afficher les meetings
         columns = ("Meeting Name", "Heure", "Duree", "Temps restant")
