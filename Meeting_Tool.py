@@ -1,4 +1,6 @@
-﻿import time
+﻿import os 
+import webbrowser
+import time
 import requests
 from datetime import datetime, timedelta
 import tkinter as tk
@@ -29,6 +31,7 @@ fg_color_widget = "Black"
 is_blinking = False
 is_transparent = False
 manual_transparency = False
+transparency_value = 1
 
 # Fonction pour gérer l'action de connexion
 def on_login():
@@ -182,7 +185,7 @@ def show_meetings_widget():
 
     global is_widget_open, widget_window, treeview_widget
     global meeting_widget_label, countdown_widget_label
-    global is_transparent
+    global is_transparent, transparency_scale, transparency_value
 
     if not is_widget_open:
         # Créer une nouvelle fenêtre
@@ -199,10 +202,16 @@ def show_meetings_widget():
 
         # Variables pour suivre le déplacement
         def start_move(event):
+            if event.widget == transparency_scale:
+                return  # Ne rien faire si l'on clique sur la jauge
+
             widget_window.x_offset = event.x_root - widget_window.winfo_x()
             widget_window.y_offset = event.y_root - widget_window.winfo_y()
 
         def move_window(event):
+
+            if event.widget == transparency_scale:
+                return  # Ne rien faire si l'on clique sur la jauge
             x = event.x_root - widget_window.x_offset
             y = event.y_root - widget_window.y_offset
             widget_window.geometry(f"+{x}+{y}")
@@ -229,15 +238,11 @@ def show_meetings_widget():
         treeview_widget.pack(padx=10, pady=10, fill=tk.BOTH, expand=True)
         
         # Définir les titres des colonnes
-        treeview_widget.heading("Meeting Name", text="Nom du meeting")
-        treeview_widget.heading("Heure", text="Heure")
-        treeview_widget.heading("Duree", text="Duree")
-        treeview_widget.heading("Temps restant", text="Temps restant")
-        
-        treeview_widget.column("Meeting Name", width=200, anchor="center")
-        treeview_widget.column("Heure", width=100, anchor="center")
-        treeview_widget.column("Duree", width=100, anchor="center")
-        treeview_widget.column("Temps restant", width=100, anchor="center")
+        for col in columns:
+            treeview_widget.heading(col, text=col)
+            treeview_widget.column(col, width=100, anchor="center")
+
+        treeview_widget.column("Meeting Name", width=200)
         
         # Bouton pour fermer la fenêtre
         def close_widget():
@@ -251,18 +256,26 @@ def show_meetings_widget():
 
         def toggle_transparency():
             """Active/désactive la transparence manuelle."""
-            global is_transparent, manual_transparency
+            global is_transparent, manual_transparency, transparency_value
 
             if is_transparent:
                 widget_window.attributes("-alpha", 1.0)  # Opaque
                 transparency_button.config(text="Transparence")
+                transparency_scale.pack_forget() #Cacher la jauge
                 manual_transparency = False  # Désactivation de la transparence manuelle
             else:
-                widget_window.attributes("-alpha", 0.5)  # Transparent
+                widget_window.attributes("-alpha", transparency_value)  # Transparent
                 transparency_button.config(text="Opaque")
+                transparency_scale.pack(side=tk.LEFT, padx=5) #Afficher la jauge
                 manual_transparency = True  # Activation de la transparence manuelle
 
             is_transparent = not is_transparent
+
+        def update_transparency(value):
+            """Met à jour la transparence de la fenêtre en fonction de la valeur de la jauge."""
+            global transparency_value
+            transparency_value = float(value)
+            widget_window.attributes("-alpha", float(value))
 
        # Conteneur des boutons avec la même couleur de fond
         button_frame = tk.Frame(widget_window, bg="#34495e")  # Utilisation de tk.Frame au lieu de ttk.Frame
@@ -272,6 +285,13 @@ def show_meetings_widget():
         transparency_button = tk.Button(button_frame, text="Transparence", command=toggle_transparency,
                                         bg="#2C3E50", fg="white", borderwidth=1, highlightthickness=0)
         transparency_button.pack(side=tk.LEFT, padx=5)
+
+        # Création de la jauge de transparence
+        transparency_scale = tk.Scale(button_frame, from_=0.1, to=1.0, resolution=0.05, orient="horizontal",
+                                      bg="#2C3E50", fg="white", highlightthickness=0,
+                                      command=update_transparency)
+        transparency_scale.set(0.5)  # Valeur initiale
+        transparency_scale.pack_forget()  # Caché au départ
 
         # Bouton Fermer avec style de fond
         close_button = tk.Button(button_frame, text="Fermer", command=close_widget,
@@ -311,8 +331,8 @@ def refresh_widget_table():
 
             # Déterminer la couleur du background
             if remaining_time.seconds > 900:  # Plus de 15 minutes
-                bg_color_widget = "SystemButtonFace"  # Transparent sous Windows 
-                fg_color_widget = "black"
+                bg_color_widget = "#34495e"  # Transparent sous Windows 
+                fg_color_widget = "white"
                 stop_blinking()
             elif remaining_time.seconds > 300:  # Entre 5 et 15 minutes
                 bg_color_widget = "yellow"
@@ -354,8 +374,12 @@ def refresh_widget_table():
         if 'onlineMeeting' in meeting and meeting['onlineMeeting'] is not None:
             teams_link = meeting['onlineMeeting'].get('joinUrl', None)
 
-        # Insérer les nouvelles informations dans le tableau
-        treeview_widget.insert("", "end", values=(meeting_name, start_time_local.strftime('%H:%M'), duration, remaining_time))
+        # Insérer les nouvelles informations dans le tableau, et inclure l'index de la réunion dans la ligne
+        treeview_widget.insert("", "end", values=(meeting_name, start_time_local.strftime('%H:%M'), duration, remaining_time), tags=("meeting",))
+        
+        # Associer l'index à la réunion en utilisant un tag pour accéder à la réunion au moment du double-clic
+        treeview_widget.tag_configure("meeting", foreground="black")  # Optionnel: pour styliser la ligne
+
 
     # Planifier le rafraîchissement périodique
     widget_window.after(1000, refresh_widget_table)
@@ -372,18 +396,18 @@ def start_blinking():
 
 def stop_blinking():
     """Arrête le clignotement et restaure l'opacité selon l'état choisi."""
-    global is_blinking
+    global is_blinking, transparency_value
     is_blinking = False
 
     # Restaurer l'opacité en fonction de l'état manuel
     if manual_transparency:
-        widget_window.attributes("-alpha", 0.5)  # Garder la transparence activée par l'utilisateur
+        widget_window.attributes("-alpha", transparency_value)  # Garder la transparence activée par l'utilisateur
     else:
         widget_window.attributes("-alpha", 1.0)  # Sinon, revenir à l'opacité normale
 
 def toggle_blinking():
     """Fait clignoter la fenêtre à une vitesse variable en fonction du temps restant avant le meeting."""
-    global is_blinking
+    global is_blinking, transparency_value
 
     if is_blinking:
         now = datetime.utcnow()
@@ -401,26 +425,38 @@ def toggle_blinking():
 
             # Alterner la transparence
             current_alpha = widget_window.attributes("-alpha")
-            new_alpha = 1.0 if current_alpha == 0.5 else 0.5
+            new_alpha = 1.0 if current_alpha == transparency_value else transparency_value
             widget_window.attributes("-alpha", new_alpha)
 
             # Replanifier le clignotement avec la nouvelle vitesse
             widget_window.after(blink_speed, toggle_blinking)
 
 def on_double_click(event):
-    """Ouvre le lien Teams si un evenement est double-clique."""
-    # Obtenez l'élément sélectionné dans le tableau
+    """Ouvre le lien Teams lorsqu'on double-clique sur une ligne du tableau."""
     selected_item = treeview_widget.selection()
-    if selected_item:
-        # Récupérer les informations de la ligne sélectionnée
-        item_values = treeview_widget.item(selected_item[0], 'values')
-        teams_link = item_values[-1]  # Le dernier élément est le lien Teams
+
+    if not selected_item:
+        return
+    
+    item = treeview_widget.item(selected_item)
+    values = item.get("values", [])
+
+    # Récupérer l'index de la réunion, par exemple en l'ajoutant dans une liste associée
+    meeting_index = treeview_widget.index(selected_item)  # L'index de la ligne sélectionnée
+
+    # Trouver la réunion correspondante à cet index
+    if meeting_index < len(future_meeting):
+        meeting = future_meeting[meeting_index]
+        teams_link = meeting.get('onlineMeeting', {}).get('joinUrl', None)
 
         if teams_link:
-            # Ouvrir le lien dans le navigateur
-            webbrowser.open(teams_link)
-        else:
-            print("Aucun lien Teams disponible pour cet evenement.")
+            try:
+                if os.name == "nt":  # Windows
+                    os.startfile(teams_link)  # Ouvre avec Teams
+                else:  # Mac/Linux
+                    webbrowser.open(teams_link)
+            except Exception as e:
+                print(f"Erreur lors de l'ouverture du lien : {e}")
 
 # Fonction pour mettre à jour l'interface graphique
 def update_gui_with_events(next_meeting, next_meeting_end, future_meeting):
@@ -525,7 +561,7 @@ root = tk.Tk()
 root.title("Compteur jusqu'au prochain meeting")
 
 # Définir la taille de la fenêtre et la couleur de fond
-root.geometry("600x600")
+root.geometry("600x975")
 root.configure(bg="#34495e")
 
 # Créer un frame pour organiser les widgets
@@ -559,10 +595,10 @@ logout_button = ttk.Button(frame, text="Se deconnecter", command=on_logout, stat
 logout_button.grid(row=3, column=1, padx=10, pady=15, sticky="w") 
 
 # Créer les labels pour afficher le nom du meeting et le temps restant
-meeting_label = ttk.Label(frame, text="Chargement...", font=("Arial", 14), background="#34495e", foreground="white")
+meeting_label = ttk.Label(frame, text="Chargement...", font=("Arial", 14), background="SystemButtonFace", foreground="black")
 meeting_label.grid(row=4, column=0, columnspan=2, pady=15)  
 
-countdown_label = ttk.Label(frame, text="Chargement...", font=("Arial", 30, "bold"), background="#34495e", foreground="white")
+countdown_label = ttk.Label(frame, text="Chargement...", font=("Arial", 30, "bold"), background="SystemButtonFace", foreground="black")
 countdown_label.grid(row=5, column=0, columnspan=2, pady=15)  
 
 # Créer un Canvas pour l'horloge
