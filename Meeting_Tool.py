@@ -324,21 +324,26 @@ def refresh_widget_table():
         start_time = datetime.strptime(remove_microseconds(next_meeting[0]['start']['dateTime']), '%Y-%m-%dT%H:%M:%S')
         end_time = datetime.strptime(remove_microseconds(next_meeting_end[0]['end']['dateTime']), '%Y-%m-%dT%H:%M:%S')
 
+        if now >= end_time:
+            remaining_time = timedelta(seconds=0)
+        else:
+            remaining_time = end_time - now
+
         # Trouver l'événement le plus proche dans le temps
         if now < start_time:  # Le meeting n'a pas encore commencé
             meeting_name = next_meeting[0]['subject']
             remaining_time = start_time - now
 
             # Déterminer la couleur du background
-            if remaining_time.seconds > 900:  # Plus de 15 minutes
+            if remaining_time.total_seconds() > 900:  # Plus de 15 minutes
                 bg_color_widget = "#34495e"  # Transparent sous Windows 
                 fg_color_widget = "white"
                 stop_blinking()
-            elif remaining_time.seconds > 300:  # Entre 5 et 15 minutes
+            elif remaining_time.total_seconds() > 300:  # Entre 5 et 15 minutes
                 bg_color_widget = "yellow"
                 fg_color_widget = "black"
                 stop_blinking()
-            elif remaining_time.seconds > 60:  # Moins de 5 minutes
+            elif remaining_time.total_seconds() > 60:  # Moins de 5 minutes
                 bg_color_widget = "red"
                 fg_color_widget = "black"
                 stop_blinking()
@@ -360,13 +365,25 @@ def refresh_widget_table():
         meeting_widget_label.config(text=meeting_name, background=bg_color_widget, foreground=fg_color_widget)
         countdown_widget_label.config(text=remaining_time_str, background=bg_color_widget, foreground=fg_color_widget)
 
+        # Rendre le label du meeting cliquable s'il a un lien Teams
+        def open_meeting_link(event):
+            """Ouvre le lien Teams du meeting en cours si disponible."""
+            if 'onlineMeeting' in next_meeting[0] and next_meeting[0]['onlineMeeting']:
+                teams_link = next_meeting[0]['onlineMeeting'].get('joinUrl', None)
+                if teams_link:
+                    webbrowser.open(teams_link)
+
+        meeting_widget_label.bind("<Button-1>", open_meeting_link)  # Active le clic
+        meeting_widget_label.config(cursor="hand2")  # Change le curseur en mode "lien"
+
     # Ajouter les événements dans le tableau
     for meeting in future_meeting:
         meeting_name = meeting['subject']
         start_time = datetime.strptime(remove_microseconds(meeting['start']['dateTime']), '%Y-%m-%dT%H:%M:%S')
         end_time = datetime.strptime(remove_microseconds(meeting['end']['dateTime']), '%Y-%m-%dT%H:%M:%S')
+        
         duration = get_duration(start_time, end_time)  # Calcul de la durée
-        remaining_time = get_remaining_time(start_time)
+        remaining_time = max(parse_remaining_time(get_remaining_time(start_time)), timedelta(seconds=0))
 
         start_time_local = convert_utc_to_local(start_time)
         
@@ -376,8 +393,6 @@ def refresh_widget_table():
 
         # Insérer les nouvelles informations dans le tableau, et inclure l'index de la réunion dans la ligne
         treeview_widget.insert("", "end", values=(meeting_name, start_time_local.strftime('%H:%M'), duration, remaining_time), tags=("meeting",))
-        
-        # Associer l'index à la réunion en utilisant un tag pour accéder à la réunion au moment du double-clic
         treeview_widget.tag_configure("meeting", foreground="black")  # Optionnel: pour styliser la ligne
 
 
@@ -558,7 +573,7 @@ def fetch_events_in_thread(user_id):
 
 # Créer l'interface graphique
 root = tk.Tk()
-root.title("Compteur jusqu'au prochain meeting")
+root.title("Meeting Tool v1.1")
 
 # Définir la taille de la fenêtre et la couleur de fond
 root.geometry("600x975")

@@ -1,4 +1,5 @@
 ﻿from datetime import datetime
+from datetime import timedelta
 import pytz
 from tzlocal import get_localzone
 
@@ -36,3 +37,14 @@ def get_duration(start_time, end_time):
     duration = end_time - start_time
     # Retourner la durée sous un format lisible (ex : "01:30" pour 1h30)
     return str(duration).split('.')[0]
+
+def parse_remaining_time(time_str):
+    """Convertit une chaîne hh:mm:ss en timedelta"""
+    if isinstance(time_str, timedelta):  
+        return time_str  # Si c'est déjà un timedelta, on ne fait rien
+    
+    try:
+        h, m, s = map(int, time_str.split(":"))
+        return timedelta(hours=h, minutes=m, seconds=s)
+    except ValueError:
+        return timedelta(seconds=0)  # Valeur par défaut en cas d'erreur
