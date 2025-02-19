@@ -573,6 +573,7 @@ def fetch_events_in_thread(user_id):
 
 # Créer l'interface graphique
 root = tk.Tk()
+root.iconbitmap("Black_Horloge.ico")
 root.title("Meeting Tool v1.1")
 
 # Définir la taille de la fenêtre et la couleur de fond
